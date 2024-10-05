@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<!-- Esta parte é substituída no arquivo base -->
+{% block titulo %}
+    <title>Login</title>
+{% endblock %}
+
+{% block conteudo %}
+    <article>
+        <!-- Formulário para alteração de senha -->
+        <form action="" method="POST">
+            {% csrf_token %}
+
+            <!-- Renderização do formulário de alteração de senha -->
+            {{ form.as_p }}
+
+            <!-- Botão de confirmação para enviar o formulário -->
+            <button type="submit">Confirmar</button>
+        </form>
+    </article>
+{% endblock %}

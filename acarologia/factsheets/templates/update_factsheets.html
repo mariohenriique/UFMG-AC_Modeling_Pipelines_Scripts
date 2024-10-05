@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<!-- Esta parte é substituída no arquivo base -->
+{% block titulo %}
+    <title>Editar Factsheets</title>
+{% endblock %}
+
+{% block conteudo %}
+    <article>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form %}
+                <p class="form-group">
+                    {% if field.errors %}
+                        <div class="">{{ field.errors.as_text }}</div>
+                    {% endif %}
+                    <label class="" for="{{ field.id_for_label }}">
+                        {{ field.label }}:
+                    </label>
+                    {{ field }}
+                </p>
+            {% endfor %}
+
+            <hr>
+
+            <!-- Editar Legenda das Imagens -->
+            Editar Legenda
+            {% for image in images %}
+                <div class="imagem">
+                    <p>
+                        <label for="edit-legend-{{ image.id }}">
+                        <img src="{{ image.imagens.url }}" alt="{{ image.legenda }}">
+                            Legenda: <textarea type="text" name="imagens-{{ image.id }}-legenda" id="edit-legend-{{ image.id }}" value="{{ image.legenda }}">{{ image.legenda }}</textarea>
+                        </label>
+                    </p>
+                </div>
+            {% endfor %}
+
+            <!-- Excluir Imagens -->
+            Excluir Imagens
+            {% for image in images %}
+                <div class="imagem">
+                    <input type="checkbox" name="delete_image" value="{{ image.id }}" id="delete-image-{{ image.id }}" onchange="marcada('{{ image.id }}')" style="display: none;">
+                    <label for="delete-image-{{ image.id }}">
+                        <img src="{{ image.imagens.url }}" alt="{{ image.legenda }}">
+                        legenda: {{ image.legenda }}
+                    </label>
+                </div>
+            {% endfor %}
+
+            <br>
+            <br>
+
+            <!-- Adicionar Novas Imagens -->
+            Adicionar Imagens
+
+            <div id="image-fields">
+            </div>
+            <input type="hidden" name="image-count" id="image-count-field">
+            <button type="button" id="add-image-field" class="btn btn-outline-secondary" onclick=addImageField()>+ Adicionar Imagem</button>
+            <p>
+                {% if request.user.is_authenticated %}
+                    <button type="submit" class="btn btn-outline-primary">Confirmar</button>
+                {% endif %}
+                <a href="{% url 'factsheets' %}">
+                    <button type="button" class="btn btn-outline-danger">Cancelar</button>
+                </a>
+            </p>
+        </form>
+    </article>
+{% endblock %}

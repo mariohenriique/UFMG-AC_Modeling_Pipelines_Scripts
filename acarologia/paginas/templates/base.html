@@ -1,0 +1,74 @@
+<!-- Este é o arquivo base, onde todo o site terá este formato -->
+{% load static %}
+<!-- Carrega tags para incluir arquivos estáticos (CSS, JavaScript, imagens, etc.) no template. -->
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    {% block titulo %}
+    <title></title>
+    {% endblock %}
+    <!-- Define o bloco 'titulo' que pode ser substituído nos templates filhos. -->
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Inclui a fonte de ícones do Google Material Icons. -->
+
+    <link rel="shortcut icon" href="{% static 'img/favicon/favicon.ico' %}" type="image/x-icon">
+    <!-- Define o ícone da página que aparece na barra de título do navegador. -->
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- Inclui o arquivo de estilo principal para o site. -->
+
+    {% block style %}
+    {% endblock %}
+    <!-- Define o bloco 'style' que pode ser substituído nos templates filhos para adicionar estilos adicionais. -->
+</head>
+
+<body>
+    <header>
+        <nav class="menuprincipal">
+
+            <a href="{% url 'homepage' %}" target="_self">Página Inicial</a>
+
+            <a href="{% url 'cadastrar_colecao' %}" target="_self">Formulário</a>
+
+            <a href="{% url 'listar_colecao' %}" target="_self">Tabela</a>
+
+            <a href="{% url 'factsheets' %}" target="_self">Fact Sheets</a>
+
+            <a href="{% url 'equipe' %}" target="_self">Equipe</a>
+
+            {% if request.user.is_authenticated %}
+
+            <a id="logout" href="{% url 'logout' %}" target="_self">Sair</a>
+
+            {% else %}
+
+            <a href="{% url 'login' %}" target="_self">Login</a>
+
+            {% endif %}
+            <!-- Verifica se o usuário está autenticado para mostrar links relevantes. -->
+
+        </nav>
+    </header>
+
+    <main>
+        {% block conteudo %}
+            <!-- Define o bloco 'conteudo' que pode ser substituído nos templates filhos para adicionar conteúdo específico. -->
+        {% endblock %}
+    </main>
+
+    <footer>
+        <!-- <a href="https://ufmg.br" target="_blank" rel="external"><img src="{% static 'img/ufmg.png' %}" alt="Logo da UFMG" class="w-25 img-responsive my-2"></a> -->
+        <!-- Inclui um link ou imagem para a instituição (comentado no código). -->
+        <p>Em desenvolvimento: <a href="#" target="_blank" rel="external">Mário Henrique</a></p>
+    </footer>
+
+    {% block script %}
+    <script src="{% static 'js/script.js' %}"></script>
+    {% endblock %}
+    <!-- Define o bloco 'script' que pode ser substituído nos templates filhos para adicionar scripts JavaScript. -->
+
+</body>
+</html>

@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<!-- Esta parte é substituída no arquivo base -->
+{% block titulo %}
+    {% for value in family_data %}
+        <title>Factsheets {{ value.familia }}</title>
+    {% endfor %}
+{% endblock %}
+
+{% block conteudo %}
+    <article>
+        {% for value in family_data %}
+            <!-- Botão de edição -->
+            <form class="editar" action="{% url 'editar_factsheet' value.pk %}" method="get">
+                <button type="submit" class="edit"><i class="material-icons">edit</i></button>
+            </form>
+
+            <!-- Informações Gerais da Família -->
+            <section>
+                <h1>{{ value.familia }} ({{ value.autor }},{{ value.ano }})</h1>
+            </section>
+
+            <!-- Características Gerais -->
+            <section>
+                <h2>Características Gerais:</h2>
+                <p>{{ value.caracteristicas_gerais | safe | linebreaks }}</p>
+            </section>
+
+            <!-- Diagnoses -->
+            <section>
+                <h2>Diagnoses:</h2>
+                <p>{{ value.diagnoses | safe | linebreaks }}</p>
+            </section>
+
+            <!-- Táxons depositados no UFMG AC e sua origem -->
+            <section>
+                <h2>Táxons depositados no UFMG AC e sua origem</h2>
+                <ul>
+                    {% for genus_item in genera %}
+                        <li>
+                            <h3><em>{{ genus_item.genus }}</em></h3>
+                            <!-- Lista de espécies (pode ser descomentado caso necessário) -->
+                            <!-- <ul>
+                                {% for species_item in species %}
+                                    {% if species_item.genus == genus_item.genus %}
+                                        <li>
+                                            <h4><em>{{ species_item.scientificName }}</em></h4>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul> -->
+                        </li>
+                    {% empty %}
+                        <tr>
+                            <td colspan="1">Sem registro</td>
+                        </tr>
+                    {% endfor %}
+                </ul>
+            </section>
+
+            <!-- Mapa de ocorrência -->
+            <section>
+                <h2>Mapa de ocorrência:</h2>
+                <div id="map">{{ map | safe}}</div> 
+            </section>
+
+            <!-- Verificar como será melhor para colocar essa parte -->
+            <section>
+                <!-- Verificação para o gráfico de zonacao -->
+                {% if graficozonacao %}
+                    <h2>Gráfico de zonacao:</h2>
+                {% endif %}
+            </section>
+
+            <!-- Dados Moleculares -->
+            <section>
+                <h2>Dados Moleculares:</h2>
+                    <p>Abaixo são apresentadas sequências de DNA referentes a espécimes depositados na UFMG AC. Os dados são apresentados no seguinte formato: Gênero, registro na coleção acarológica da UFMG, código do gene sequenciado (ex. 18S), código de acesso do <a class="btn-outline-default" href="https://www.ncbi.nlm.nih.gov/genbank/">Gen Bank</a> e um há um hiperlink incluso. Seguidos da origem daquele indivíduo em específico.</p>
+                    {% if value.family == Leeuwenhoekiidae %}
+                    
+                        {% for data in genetic_data %}
+                            <ul>
+                                <li>
+                                    <a href="https://www.ncbi.nlm.nih.gov/nuccore/ON145667" target="_blank" rel="external">{{ data.associatedSequences }}</a>
+                                </li>
+                            </ul>
+                        {% empty %}
+                            <tr>
+                                <td colspan="1">Sem registro</td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <p>Sem registro de dados Moleculares</p>
+                    {% endif %}
+            </section>
+
+            <!-- Imagens -->
+            <section>
+                {% if imagens %}
+                    <h2>Imagens:</h2>
+                {% endif %}
+                <div class="allimages">
+                    {% for image_item in imagens %}
+                    <figure>
+                        <picture>
+                            <img src="{{ image_item.imagens.url }}" alt="{{ image_item.legenda }}">
+                        </picture>
+                        <figcaption>{{ image_item.legenda | safe }}</figcaption>
+                    </figure>
+                    {% empty %}
+                        <p>Sem imagens disponíveis.</p>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <!-- Referências -->
+            <section>
+                <h2>Referências:</h2>
+                <p>{{ value.referencias | safe | linebreaks }}</p>
+            </section>
+
+        {% empty %}
+            <!-- Mensagem se não houver factsheets -->
+            <p>A família {{ family }} não possui factsheets.</p>
+            <!-- Verificação de autenticação do usuário -->
+            {% if request.user.is_authenticated %}
+                <a href="/cadastrar/factsheets/">
+                    <button type="button">Cadastrar</button>
+                </a>
+            {% endif %}
+        {% endfor %}
+    </article>
+{% endblock %}

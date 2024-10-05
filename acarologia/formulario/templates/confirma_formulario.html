@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<!-- Esta parte é substituída no arquivo base -->
+{% block titulo %}
+    <title>Novo exemplar</title>
+{% endblock %}
+
+{% block conteudo %}
+
+    {% if form_data %}
+        <h2>Form Data</h2>
+        <table>
+            {% for field, value in form_data.items %}
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>{{ field }}</td>
+                    <td>{{ value }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+
+{% endblock %}

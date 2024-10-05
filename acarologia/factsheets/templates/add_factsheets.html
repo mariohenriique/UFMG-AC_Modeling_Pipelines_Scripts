@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<!-- Esta parte é substituída no arquivo base -->
+{% block titulo %}
+    <title>Cadastrar Factsheets</title>
+{% endblock %}
+
+{% block conteudo %}
+    <article>
+        <!-- Formulário para cadastrar factsheets -->
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form %}
+                <p class="form-group">
+                    {% if field.errors %}
+                        <div class="">{{ field.errors.as_text }}</div>
+                    {% endif %}
+                    <!-- Rótulo e campo de entrada para cada campo no formulário -->
+                    <label class="" for="{{ field.id_for_label }}">
+                        {{ field.label }}:
+                    </label>
+                    {{ field }}
+                </p>
+            {% endfor %}
+            <hr>
+
+            Adicionar Imagens
+            <!-- Adicionar Imagens -->
+            <div id="image-fields">
+            </div>
+            <input type="hidden" name="image-count" id="image-count-field" value="0">
+            <button type="button" id="add-image-field" class="" onclick=addImageField()>+ Adicionar Imagem</button>
+
+            <br>
+            <br>
+
+            <!-- Botões de envio e cancelamento -->
+            {% if request.user.is_authenticated %}
+                <button type="submit" class="confirm">Adicionar</button>
+            {% endif %}
+
+            <a href="{% url 'factsheets' %}">
+                <button type="button" class="cancel">Cancelar</button>
+            </a>
+        </form>
+    </article>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<!-- Esta parte é substituída no arquivo base -->
+{% block titulo %}
+    <title>Factsheets</title>
+{% endblock %}
+
+{% block conteudo %}
+    <article>
+        <h1>Famílias</h1>
+        <p>Escrever um texto para aparecer aqui</p>
+        
+        {% regroup family_list by family.0 as family_grouped %}  <!-- Agrupar famílias pela primeira letra -->
+
+        <!-- Menu de navegação por letras -->
+        <nav class="letter-navigation">
+            <ul>
+              {% for family in family_grouped %}
+                <li class="letras"><a href="#{{ family.grouper }}">{{ family.grouper }}</a></li>
+              {% endfor %}
+            </ul>
+        </nav>
+
+        {% for family in family_grouped %}
+            <h2 id="{{ family.grouper }}">{{ family.grouper }}</h2>
+            <ul class="lista_familias">
+                {% for item in family.list %}
+                    <li>
+                        <a href="{% url 'factsheetsfamilia' family=item.family %}">{{ item.family }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    </article>
+{% endblock %}

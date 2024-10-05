@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<!-- Esta parte é substituída no arquivo base -->
+{% block titulo %}
+    <title>Equipe</title>
+{% endblock %}
+
+{% block conteudo %}
+
+    <div class="container">
+        <!-- Container para organizar o conteúdo da página. -->
+        <table class="table">
+            <caption></caption>
+            <thead>
+                <th id="1"></th>
+                <th id="2"></th>
+            </thead>
+            <tbody>
+                <tr>
+                    <!--Informação Almir-->
+                    <td><!-- tag picture --><img class="w-50 rounded mx-auto" src="{% static 'img/imagens/Almir.jpeg' %}" alt=""></td>
+                    <td><p class="nome">Dr. Almir R. Pepato</p>
+                    <p class="funcao">Pesquisador Principal</p>
+                    <p><a href="http://lattes.cnpq.br/6323551517347442" target="_blank">Currículo Lattes</a></p>
+                    <p><a href="https://scholar.google.com.br/citations?user=K63_LIUAAAAJ&hl=pt-BR" target="_blank">Google Acadêmico</a></p>
+                    <p><a href="mail-to: apepato@ufmg.br">Email: apepato@ufmg.br</a></p></td>
+                </tr>
+                <tr>
+                    <!--Informações Samuel-->
+                    <td><p class="nome">Samuel Geremias dos Santos Costa</p>
+                    <p class="funcao">Doutorando</p>
+                    <p><a href="http://lattes.cnpq.br/3408155637088392" target="_blank">Currículo Lattes</a></p>
+                    <p><a href="mail-to: estoupa.bob@gmail.com">Email: estoupa.bob@gmail.com</a></p></td>
+                    <td><!-- tag picture --><img class="w-50 rounded" src="{% static 'img/imagens/Samuel.jpeg' %}" alt=""></td>
+                </tr>
+                <tr>
+                    <!--Informações Brenda-->
+                    <td><!-- tag picture --><img class="w-50 rounded" src="{% static 'img/imagens/Brenda.jpeg' %}" alt=""></td>
+                    <td><p class="nome">Brenda K. Gomes Almeida</p>
+                    <p class="funcao">Doutoranda</p>
+                    <p><a href="http://lattes.cnpq.br/3634535147899726" target="_blank">Currículo Lattes</a></p>
+                    <p><a href="mail-to: g.almeidabrenda@gmail.com">Email: g.almeidabrenda@gmail.com</a></p></td>
+                </tr>
+                <tr>
+                    <!--Informações Dante-->
+                    <td><p class="nome">Dante Batista Ribeiro</p>
+                    <p class="funcao">Mestrando</p>
+                    <p><a href="http://lattes.cnpq.br/4889173165387006" target="_blank">Currículo Lattes</a></p>
+                    <p><a href="mail-to: dante.dantebatista@gmail.com">Email: dante.dantebatista@gmail.com</a></p></td>
+                    <td><!-- tag picture --><img class="w-50 rounded" src="{% static 'img/imagens/Dante.jpeg' %}" alt=""></td>
+                </tr>
+                <tr>
+                    <!--Informações Mário-->
+                    <td><!-- tag picture --><img class="w-50 rounded" src="{% static 'img/imagens/Mario.jpeg' %}" alt=""></td>
+                    <td><p>Mário Henrique de Assis Silva</p>
+                    <p class="funcao">Graduando</p>
+                    <p><a href="http://lattes.cnpq.br/9093900589560786" target="_blank">Currículo Lattes</a></p>
+                    <p><a href="mail-to: marioassis1996@ufmg.br">Email: marioassis1996@ufmg.br</a></p></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

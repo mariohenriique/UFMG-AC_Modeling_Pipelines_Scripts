@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<!-- Esta parte é substituída no arquivo base -->
+{% block titulo %}
+    <title>Novo exemplar</title>
+{% endblock %}
+
+{% block style %}
+<style>
+    span {
+        position: relative;
+    }
+    
+    span::after {
+        content: attr(data-tooltip);
+        position: absolute;
+        bottom: 100%;
+        left: 200%;
+        transform: translateX(-50%);
+        background-color: #000;
+        color: #fff;
+        padding: 5px 10px;
+        font-size: 14px;
+        border-radius: 5px;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s, visibility 0.3s;
+    }
+    
+    span:hover::after {
+        opacity: 1;
+        visibility: visible;
+    }
+</style>
+{% endblock %}
+
+{% block conteudo %}
+    <article>
+        <h1>{{ titulo }}</h1>
+        <!-- Mensagem para usuário não logado -->
+        {% if request.user.is_authenticated %}
+            <p>{{ mensagem }}</p>
+        {% else %}
+            <p>{{ naologado }} <a href="{% url 'login' %}">Clique aqui.</a></p>
+        {% endif %}
+        <!-- Link para formulário avançado -->
+        {% if avancado %}
+            <p>{{ avancado }} <a href="{% url 'cadastrar_avancado_colecao' %}">Clique Aqui.</a></p>
+        {% endif %}
+        <!-- Link para formulário usando csv -->
+        {% if csv %}
+            <p><a href="{% url 'cadastrar_csv_colecao' %}">{{ csv|safe }}</a></p>
+        {% endif %}
+        {% if modelo %}
+            <form method="POST">
+                <a href="{% url 'baixa_modelo' %}" download class="btn btn-outline-default">Modelo Darwin Core</a>
+            </form>
+        {% endif %}
+        <form method="POST" class="" enctype="multipart/form-data" autocomplete="off">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="formulario">
+                    <p class="form-group">
+                        {% if field.errors %}
+                            <div class="alert alert-danger">{{ field.errors.as_text }}</div>
+                        {% endif %}
+                        <label id="{{ field.html_name }}" for="{{ field.id_for_label }}">
+                            {{ field.label }}:
+                        </label>
+                        {{ field }}
+                        {% if field.help_text %}
+                            <span data-tooltip="">&#x2754;</span>{{ field.help_text|safe }}
+                        {% endif %}
+                    </p>
+                </div>
+            {% endfor %}
+            {% if request.user.is_authenticated %}
+                <button type="submit" class="btn btn-outline-primary">Confirmar</button>
+            {% endif %}
+            <a href="/listar/colecao/">
+                <button type="button" class="btn btn-outline-danger">Cancelar</button>
+            </a>
+        </form>
+    </article>
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}
