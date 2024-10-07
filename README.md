@@ -1,5 +1,5 @@
 # UFMG-AC_Modeling_Pipelines_Scripts
-Scripts e pipelines para padronização de metadados da Coleção Acarológica do CCT-UFMG no formato Darwin Core. Inclui automação de análises de modelagem de distribuição de espécies e processamento de sequências genéticas, facilitando o compartilhamento e a atualização contínua dos dados.
+Scripts and pipelines for standardizing metadata of the Acarology Collection from CCT-UFMG in Darwin Core format. Includes automation of species distribution modeling analyses and genetic sequence processing, facilitating continuous data sharing and updating.
 
 ## Pipeline Taxallnomy
 The identification of specimens at the lowest taxonomic level is a challenging daily task in several taxonomic collections, and hence data entry for the classification often requires special attention. Data sometimes changes either because researchers examining specimens update their classification, describe them as new species, or because the entire systematics of a group is modified as new phylogenetic analyses are published. These changes introduce data inconsistencies concerning other taxonomical ranks.
